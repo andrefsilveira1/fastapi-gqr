@@ -42,11 +42,12 @@ def root() -> dict:
     return {"msg": "Submissions requested"}
 
 @api_router.get("/gqr/{id}", status_code=200)
-def root() -> dict:
+def root(*, id: int) -> dict:
     """
     Root GET
     """
-    return {"msg": "GQR requested"}
+    result = id
+    return {"msg": f"GQR requested: {result}"}
 
 @api_router.get("/submissoes/{id}", status_code=200)
 def root() -> dict:
