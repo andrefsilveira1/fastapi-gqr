@@ -18,9 +18,54 @@ def root() -> dict:
     """
     Root POST
     """
-    return {"msg:" "File uploaded"}
+    return {"msg": "File uploaded"}
+
+@api_router.post("/exportar/csv/{name}", status_code=200)
+def root(*, name: str) -> dict:
+    """
+    Root POST
+    """
+    query = name
+    return {"msg": f"File Downloaded: {name}"}
+@api_router.get("/exportar/csv/{name}", status_code=200)
+def root(*, name: str) -> dict:
+    """
+    Root GET
+    """
+    query = name
+    return {"msg": f"File Downloaded with GET: {query}"}
 
 
+@api_router.get("/submissoes", status_code=200)
+def root() -> dict:
+    """
+    Root GET
+    """
+    return {"msg": "Submissions requested"}
+
+@api_router.get("/gqr/{id}", status_code=200)
+def root(*, id: int) -> dict:
+    """
+    Root GET
+    """
+    result = id
+    return {"msg": f"GQR requested: {result}"}
+
+@api_router.get("/submissoes/{id}", status_code=200)
+def root(*, id: int) -> dict:
+    """
+    Root GET
+    """
+    query = id
+    return {"msg": f"Submissions id requested: {query}"}
+
+@api_router.delete("/submissoes/{id}", status_code=200)
+def root(*, id: int) -> dict:
+    """
+    Root DELETE
+    """
+    query = id
+    return {"msg": f"Submissions id requested {query}"}
 
 app.include_router(api_router)
 
