@@ -18,9 +18,22 @@ def root() -> dict:
     """
     Root POST
     """
-    return {"msg:" "File uploaded"}
+    return {"msg": "File uploaded"}
 
 
+@api_router.get("/submissoes", status_code=200)
+def root() -> dict:
+    """
+    Root GET
+    """
+    return {"msg": "Submissions requested"}
+
+@api_router.get("/gqr/:id", status_code=200)
+def root() -> dict:
+    """
+    Root GET
+    """
+    return {"msg": "GQR requested"}
 
 app.include_router(api_router)
 
