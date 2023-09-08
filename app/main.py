@@ -20,6 +20,19 @@ def root() -> dict:
     """
     return {"msg": "File uploaded"}
 
+@api_router.post("/exportar/csv/:name", status_code=200)
+def root() -> dict:
+    """
+    Root POST
+    """
+    return {"msg": "File Downloaded"}
+@api_router.get("/exportar/csv/:name", status_code=200)
+def root() -> dict:
+    """
+    Root GET
+    """
+    return {"msg": "File Downloaded with GET"}
+
 
 @api_router.get("/submissoes", status_code=200)
 def root() -> dict:
@@ -34,6 +47,20 @@ def root() -> dict:
     Root GET
     """
     return {"msg": "GQR requested"}
+
+@api_router.get("/submissoes/:id", status_code=200)
+def root() -> dict:
+    """
+    Root GET
+    """
+    return {"msg": "Submissions id requested"}
+
+@api_router.delete("/submissoes/:id", status_code=200)
+def root() -> dict:
+    """
+    Root DELETE
+    """
+    return {"msg": "Submissions id requested"}
 
 app.include_router(api_router)
 
