@@ -20,13 +20,13 @@ def root() -> dict:
     """
     return {"msg": "File uploaded"}
 
-@api_router.post("/exportar/csv/:name", status_code=200)
+@api_router.post("/exportar/csv/{name}", status_code=200)
 def root() -> dict:
     """
     Root POST
     """
     return {"msg": "File Downloaded"}
-@api_router.get("/exportar/csv/:name", status_code=200)
+@api_router.get("/exportar/csv/{name}", status_code=200)
 def root() -> dict:
     """
     Root GET
@@ -41,21 +41,21 @@ def root() -> dict:
     """
     return {"msg": "Submissions requested"}
 
-@api_router.get("/gqr/:id", status_code=200)
+@api_router.get("/gqr/{id}", status_code=200)
 def root() -> dict:
     """
     Root GET
     """
     return {"msg": "GQR requested"}
 
-@api_router.get("/submissoes/:id", status_code=200)
+@api_router.get("/submissoes/{id}", status_code=200)
 def root() -> dict:
     """
     Root GET
     """
     return {"msg": "Submissions id requested"}
 
-@api_router.delete("/submissoes/:id", status_code=200)
+@api_router.delete("/submissoes/{id}", status_code=200)
 def root() -> dict:
     """
     Root DELETE
