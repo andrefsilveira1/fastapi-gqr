@@ -14,8 +14,8 @@ def root() -> dict:
     """
     return {"msg": "Hello, World!"}
 
-@api_router.post("/upload-csv", status_code=200)
-async def root(file: UploadFile) -> dict:
+@api_router.post("/file", status_code=200)
+async def create_upload_file(file: UploadFile = File(...)):
     """
     Root POST
     """
