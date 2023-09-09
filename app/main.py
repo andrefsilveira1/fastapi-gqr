@@ -1,5 +1,6 @@
-from fastapi import FastAPI, APIRouter
-
+from fastapi import FastAPI, APIRouter, File, UploadFile
+import pandas as pd
+import io
 
 app = FastAPI(title="Recipe API", openapi_url="/openapi.json")
 
@@ -14,11 +15,18 @@ def root() -> dict:
     return {"msg": "Hello, World!"}
 
 @api_router.post("/upload-csv", status_code=200)
-def root() -> dict:
+async def root(file: UploadFile) -> dict:
     """
     Root POST
     """
-    return {"msg": "File uploaded"}
+    print("Bateu aqui")
+    if file.filename.endswith(".csv"):
+        csv_content = await file.red()
+        df = pd.read_csv(io.StringIO(csv_content.decode("utf-8")))
+        print(df.head())
+    return {
+            "file": f"{df}",
+            }
 
 @api_router.post("/exportar/csv/{name}", status_code=200)
 def root(*, name: str) -> dict:
