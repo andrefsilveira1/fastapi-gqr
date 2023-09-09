@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, File, UploadFile
+from fastapi import FastAPI, APIRouter, File, UploadFile, HTTPException
 import pandas as pd
 import io
 
@@ -19,14 +19,19 @@ async def root(file: UploadFile) -> dict:
     """
     Root POST
     """
-    print("Bateu aqui")
-    if file.filename.endswith(".csv"):
-        csv_content = await file.red()
+    try:
+        if not file.filename.endswith(".csv"):
+            raise HTTPException(status_code=422, detail="O arquivo enviado não é um arquivo CSV.")
+
+        csv_content = await file.read()
         df = pd.read_csv(io.StringIO(csv_content.decode("utf-8")))
-        print(df.head())
-    return {
-            "file": f"{df}",
-            }
+        # Processar os dados do DataFrame conforme necessário
+        # ...
+        
+        return {"file_data": df.to_dict(orient="records")}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar o arquivo CSV: {str(e)}")
 
 @api_router.post("/exportar/csv/{name}", status_code=200)
 def root(*, name: str) -> dict:
