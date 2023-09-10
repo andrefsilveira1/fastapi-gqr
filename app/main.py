@@ -24,7 +24,7 @@ async def create_upload_file(file: UploadFile = File(...)):
             raise HTTPException(status_code=422, detail="O arquivo enviado não é um arquivo CSV.")
 
         csv_content = await file.read()
-        df = pd.read_csv(io.StringIO(csv_content.decode("utf-8")))
+        df = pd.read_csv(io.StringIO(csv_content.decode("utf-8"))).head()
         
         return {"file_data": df.to_dict(orient="records")}
     
