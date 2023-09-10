@@ -1,11 +1,22 @@
 from fastapi import FastAPI, APIRouter, File, UploadFile, HTTPException
 import pandas as pd
 import io
+import mysql.connector
+from init_connection import db_config
 
 app = FastAPI(title="Recipe API", openapi_url="/openapi.json")
 
 api_router = APIRouter()
 
+
+@api_router.get("/test")
+async def test_db_connection():
+    try:
+        conn = mysql.connector.connect(**db_config)
+        conn.close()
+        return {"message": "Conexão com o MySQL bem-sucedida!"}
+    except Exception as e:
+        return {"message": f"Erro ao conectar ao MySQL: {str(e)}"}
 
 @api_router.get("/", status_code=200)
 def root() -> dict:
@@ -24,9 +35,7 @@ async def create_upload_file(file: UploadFile = File(...)):
             raise HTTPException(status_code=422, detail="O arquivo enviado não é um arquivo CSV.")
 
         csv_content = await file.read()
-        df = pd.read_csv(io.StringIO(csv_content.decode("utf-8")))
-        # Processar os dados do DataFrame conforme necessário
-        # ...
+        df = pd.read_csv(io.StringIO(csv_content.decode("utf-8"))).head()
         
         return {"file_data": df.to_dict(orient="records")}
     
@@ -34,14 +43,14 @@ async def create_upload_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Erro ao processar o arquivo CSV: {str(e)}")
 
 @api_router.post("/exportar/csv/{name}", status_code=200)
-def root(*, name: str) -> dict:
+def export_csv(*, name: str) -> dict:
     """
     Root POST
     """
     query = name
     return {"msg": f"File Downloaded: {name}"}
 @api_router.get("/exportar/csv/{name}", status_code=200)
-def root(*, name: str) -> dict:
+def get_export_csv(*, name: str) -> dict:
     """
     Root GET
     """
@@ -50,14 +59,14 @@ def root(*, name: str) -> dict:
 
 
 @api_router.get("/submissoes", status_code=200)
-def root() -> dict:
+def get_submissions() -> dict:
     """
     Root GET
     """
     return {"msg": "Submissions requested"}
 
 @api_router.get("/gqr/{id}", status_code=200)
-def root(*, id: int) -> dict:
+def get_gqr_id(*, id: int) -> dict:
     """
     Root GET
     """
@@ -65,7 +74,7 @@ def root(*, id: int) -> dict:
     return {"msg": f"GQR requested: {result}"}
 
 @api_router.get("/submissoes/{id}", status_code=200)
-def root(*, id: int) -> dict:
+def get_submissions_id(*, id: int) -> dict:
     """
     Root GET
     """
@@ -73,7 +82,7 @@ def root(*, id: int) -> dict:
     return {"msg": f"Submissions id requested: {query}"}
 
 @api_router.delete("/submissoes/{id}", status_code=200)
-def root(*, id: int) -> dict:
+def delete_submissions(*, id: int) -> dict:
     """
     Root DELETE
     """
