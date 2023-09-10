@@ -25,8 +25,6 @@ async def create_upload_file(file: UploadFile = File(...)):
 
         csv_content = await file.read()
         df = pd.read_csv(io.StringIO(csv_content.decode("utf-8")))
-        # Processar os dados do DataFrame conforme necessário
-        # ...
         
         return {"file_data": df.to_dict(orient="records")}
     
