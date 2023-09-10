@@ -34,14 +34,14 @@ async def create_upload_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Erro ao processar o arquivo CSV: {str(e)}")
 
 @api_router.post("/exportar/csv/{name}", status_code=200)
-def root(*, name: str) -> dict:
+def export_csv(*, name: str) -> dict:
     """
     Root POST
     """
     query = name
     return {"msg": f"File Downloaded: {name}"}
 @api_router.get("/exportar/csv/{name}", status_code=200)
-def root(*, name: str) -> dict:
+def get_export_csv(*, name: str) -> dict:
     """
     Root GET
     """
@@ -50,14 +50,14 @@ def root(*, name: str) -> dict:
 
 
 @api_router.get("/submissoes", status_code=200)
-def root() -> dict:
+def get_submissions() -> dict:
     """
     Root GET
     """
     return {"msg": "Submissions requested"}
 
 @api_router.get("/gqr/{id}", status_code=200)
-def root(*, id: int) -> dict:
+def get_gqr_id(*, id: int) -> dict:
     """
     Root GET
     """
@@ -65,7 +65,7 @@ def root(*, id: int) -> dict:
     return {"msg": f"GQR requested: {result}"}
 
 @api_router.get("/submissoes/{id}", status_code=200)
-def root(*, id: int) -> dict:
+def get_submissions_id(*, id: int) -> dict:
     """
     Root GET
     """
@@ -73,7 +73,7 @@ def root(*, id: int) -> dict:
     return {"msg": f"Submissions id requested: {query}"}
 
 @api_router.delete("/submissoes/{id}", status_code=200)
-def root(*, id: int) -> dict:
+def delete_submissions(*, id: int) -> dict:
     """
     Root DELETE
     """
