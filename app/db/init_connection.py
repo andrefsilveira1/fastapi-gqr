@@ -1,14 +1,15 @@
 import mysql.connector
 from fastapi import FastAPI
+import os
 
 app = FastAPI()
 
 # Configuração das informações de conexão (substitua pelos seus próprios dados)
 db_config = {
-    "host": "localhost",
-    "user": "seu_usuario",
-    "password": "sua_senha",
-    "database": "seu_banco_de_dados"
+    "host": os.environ.get("DB_HOST"),
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PASSWORD"),
+    "database": os.environ.get("DB_DATABASE"),
 }
 
 # Cria uma conexão com o banco de dados
