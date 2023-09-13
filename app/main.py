@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter, File, UploadFile, HTTPException
 import pandas as pd
 import io
-import mysql.connector
+import pymysql
 from init_connection import db_config
 
 app = FastAPI(title="Recipe API", openapi_url="/openapi.json")
@@ -12,11 +12,18 @@ api_router = APIRouter()
 @api_router.get("/test")
 async def test_db_connection():
     try:
-        conn = mysql.connector.connect(**db_config)
-        conn.close()
-        return {"message": "Conexão com o MySQL bem-sucedida!"}
+        connection = pymysql.connect(**db_config)
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            result = cursor.fetchone()
+            if result:
+                return {"message": "Conexão com o MySQL bem-sucedida!"}
+            else:
+                return {"message": "Erro ao conectar ao MySQL: Nenhum resultado retornado."}
     except Exception as e:
         return {"message": f"Erro ao conectar ao MySQL: {str(e)}"}
+    finally:
+        connection.close()
 
 @api_router.get("/", status_code=200)
 def root() -> dict:
