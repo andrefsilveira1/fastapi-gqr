@@ -20,16 +20,10 @@ async def test_db_connection():
 
 @api_router.get("/", status_code=200)
 def root() -> dict:
-    """
-    Root GET
-    """
     return {"msg": "Hello, World!"}
 
 @api_router.post("/file", status_code=200)
 async def create_upload_file(file: UploadFile = File(...)):
-    """
-    Root POST
-    """
     try:
         if not file.filename.endswith(".csv"):
             raise HTTPException(status_code=422, detail="O arquivo enviado não é um arquivo CSV.")
@@ -44,48 +38,30 @@ async def create_upload_file(file: UploadFile = File(...)):
 
 @api_router.post("/exportar/csv/{name}", status_code=200)
 def export_csv(*, name: str) -> dict:
-    """
-    Root POST
-    """
     query = name
     return {"msg": f"File Downloaded: {name}"}
 @api_router.get("/exportar/csv/{name}", status_code=200)
 def get_export_csv(*, name: str) -> dict:
-    """
-    Root GET
-    """
     query = name
     return {"msg": f"File Downloaded with GET: {query}"}
 
 
 @api_router.get("/submissoes", status_code=200)
 def get_submissions() -> dict:
-    """
-    Root GET
-    """
     return {"msg": "Submissions requested"}
 
 @api_router.get("/gqr/{id}", status_code=200)
 def get_gqr_id(*, id: int) -> dict:
-    """
-    Root GET
-    """
     result = id
     return {"msg": f"GQR requested: {result}"}
 
 @api_router.get("/submissoes/{id}", status_code=200)
 def get_submissions_id(*, id: int) -> dict:
-    """
-    Root GET
-    """
     query = id
     return {"msg": f"Submissions id requested: {query}"}
 
 @api_router.delete("/submissoes/{id}", status_code=200)
 def delete_submissions(*, id: int) -> dict:
-    """
-    Root DELETE
-    """
     query = id
     return {"msg": f"Submissions id requested {query}"}
 
