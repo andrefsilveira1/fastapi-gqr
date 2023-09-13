@@ -14,5 +14,6 @@ def find_best_gqr(arr, limit=None):
         greatest = result
     
     average = calculate_average_values(greatest)
+    deviation = calculate_deviation(greatest)
 
     return {'greatest': greatest, 'average': average, 'deviation': deviation}
