@@ -12,5 +12,7 @@ def find_best_gqr(arr, limit=None):
         greatest = result[-10:]
     else:
         greatest = result
+    
+    average = calculate_average_values(greatest)
 
-    return {'greatest': greatest}
+    return {'greatest': greatest, 'average': average, 'deviation': deviation}
